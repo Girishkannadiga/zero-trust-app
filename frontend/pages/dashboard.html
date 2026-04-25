@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Zero Trust Secure Cloud Access</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Sidebar ─────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">&#128274;</div>
+      <div>
+        <div class="sidebar-brand-name">Zero Trust</div>
+        <div class="sidebar-brand-sub">Cloud Access</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <span class="nav-section-label">Overview</span>
+
+      <a href="#" class="nav-item active" data-section="overview">
+        <span class="nav-icon">&#127968;</span> Dashboard
+      </a>
+
+      <span class="nav-section-label">Security</span>
+
+      <a href="#" class="nav-item" data-section="devices">
+        <span class="nav-icon">&#128187;</span> Devices
+        <span class="nav-badge" id="deviceBadge">0</span>
+      </a>
+      <a href="#" class="nav-item" data-section="ipLogs">
+        <span class="nav-icon">&#127760;</span> IP Tracking
+      </a>
+      <a href="#" class="nav-item" data-section="loginLogs">
+        <span class="nav-icon">&#128196;</span> Login Logs
+      </a>
+      <a href="#" class="nav-item" data-section="mfa">
+        <span class="nav-icon">&#128241;</span> MFA Settings
+      </a>
+
+      <span class="nav-section-label">Account</span>
+
+      <a href="#" class="nav-item" data-section="profile">
+        <span class="nav-icon">&#128100;</span> Profile
+      </a>
+      <a href="#" class="nav-item" data-section="sessions">
+        <span class="nav-icon">&#128279;</span> Active Sessions
+      </a>
+
+      <span class="nav-section-label admin-only" style="display:none;">Administration</span>
+      <a href="#" class="nav-item admin-only" data-section="admin" style="display:none;">
+        <span class="nav-icon">&#9881;</span> User Management
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="sidebarAvatar">?</div>
+        <div>
+          <div class="user-name" id="sidebarUserName">Loading…</div>
+          <div class="user-role" id="sidebarUserRole">—</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── Main content ────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h2 id="pageTitle">Dashboard</h2>
+        <p id="pageSubtitle">Security overview</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-clock" id="liveClock">--:--:--</div>
+        <button class="btn btn-danger" id="logoutBtn">&#128274; Logout</button>
+      </div>
+    </header>
+
+    <!-- Page body -->
+    <div class="page-body">
+
+      <!-- ══ SECTION: overview ══ -->
+      <section data-section="overview">
+
+        <!-- Stat cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">&#128274;</div>
+            <div><div class="stat-value" id="statSessions">—</div><div class="stat-label">Active Sessions</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">&#128187;</div>
+            <div><div class="stat-value" id="statDevices">—</div><div class="stat-label">Trusted Devices</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon yellow">&#127760;</div>
+            <div><div class="stat-value" id="statIPs">—</div><div class="stat-label">Unique IPs (30d)</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">&#9888;</div>
+            <div><div class="stat-value" id="statThreats">—</div><div class="stat-label">Blocked Attempts</div></div>
+          </div>
+        </div>
+
+        <!-- Security status -->
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header">
+            <span class="card-title">&#128272; Security Status</span>
+            <span class="badge badge-success" id="overallStatus">SECURE</span>
+          </div>
+          <div class="card-body">
+            <div class="security-grid">
+              <div class="security-item">
+                <span class="security-item-icon">&#128241;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Multi-Factor Auth</div>
+                  <div class="security-item-value" id="mfaStatus">—</div>
+                </div>
+                <span class="badge badge-success" id="mfaBadge">ON</span>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128187;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Current Device</div>
+                  <div class="security-item-value" id="deviceStatus">—</div>
+                </div>
+                <span class="badge badge-success" id="deviceBadgeStatus">Trusted</span>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#127760;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">IP Address</div>
+                  <div class="security-item-value font-mono" id="ipStatus">—</div>
+                </div>
+                <span class="badge badge-info" id="ipBadge">Known</span>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128336;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Last Login</div>
+                  <div class="security-item-value" id="lastLogin">—</div>
+                </div>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128260;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Session Token</div>
+                  <div class="security-item-value font-mono" id="tokenPreview">—</div>
+                </div>
+                <span class="badge badge-success">JWT</span>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128274;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Session Expires</div>
+                  <div class="security-item-value" id="sessionExpiry">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk score -->
+        <div class="card" style="margin-top:24px;">
+          <div class="card-header">
+            <span class="card-title">&#127919; Risk Assessment</span>
+            <span class="badge badge-info" id="riskLevelBadge">Calculating…</span>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;align-items:flex-start;gap:28px;flex-wrap:wrap;">
+              <div id="riskScoreCircle" style="min-width:90px;height:90px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-tertiary);border:3px solid var(--border);flex-shrink:0;">
+                <span id="riskScoreValue" style="font-size:1.8rem;font-weight:900;line-height:1;">—</span>
+                <span style="font-size:0.65rem;color:var(--text-muted);margin-top:2px;">/100</span>
+              </div>
+              <div style="flex:1;min-width:200px;">
+                <div style="font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">Risk Factors</div>
+                <div id="riskFactors" style="margin-bottom:16px;"></div>
+                <div id="riskRecommendations"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SECTION: devices ══ -->
+      <section data-section="devices" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">&#128187; Trusted Devices</span>
+            <button class="btn btn-ghost" style="padding:6px 12px;font-size:0.82rem;" onclick="dashboard.loadDevices()">Refresh</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Device Label</th><th>OS</th><th>Browser</th><th>Fingerprint</th>
+                    <th>First Seen</th><th>Last Seen</th><th>Status</th><th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="devicesBody">
+                  <tr><td colspan="8" class="text-muted text-center" style="padding:24px;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SECTION: ipLogs ══ -->
+      <section data-section="ipLogs" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">&#127760; IP Tracking</span>
+            <button class="btn btn-ghost" style="padding:6px 12px;font-size:0.82rem;" onclick="dashboard.loadIpLogs()">Refresh</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>IP Address</th><th>Date &amp; Time</th><th>Device</th><th>Location</th><th>Result</th></tr>
+                </thead>
+                <tbody id="ipLogsBody">
+                  <tr><td colspan="5" class="text-muted text-center" style="padding:24px;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SECTION: loginLogs ══ -->
+      <section data-section="loginLogs" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">&#128196; Login Activity</span>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-ghost" style="padding:6px 12px;font-size:0.82rem;" onclick="dashboard.loadLoginLogs()">Refresh</button>
+              <button class="btn btn-ghost" style="padding:6px 12px;font-size:0.82rem;" id="exportLogsBtn">&#11015; Export CSV</button>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Date &amp; Time</th><th>IP Address</th><th>Device</th><th>Location</th><th>Status</th><th>MFA Used</th></tr>
+                </thead>
+                <tbody id="loginLogsBody">
+                  <tr><td colspan="6" class="text-muted text-center" style="padding:24px;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SECTION: mfa ══ -->
+      <section data-section="mfa" style="display:none;">
+        <div class="card">
+          <div class="card-header"><span class="card-title">&#128241; MFA Settings</span></div>
+          <div class="card-body">
+            <div class="security-grid">
+              <div class="security-item">
+                <span class="security-item-icon">&#128241;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Email OTP</div>
+                  <div class="security-item-value">One-time password sent to your email</div>
+                </div>
+                <span class="badge" id="mfaStatusBadge">—</span>
+              </div>
+            </div>
+            <div style="margin-top:24px;padding:20px;background:var(--bg-tertiary);border-radius:8px;border:1px solid var(--border);">
+              <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:16px;">
+                Multi-factor authentication adds an extra layer of security by requiring a one-time code from your email every time you sign in.
+              </p>
+              <p id="mfaCurrentStatus" style="margin-bottom:16px;font-weight:600;"></p>
+              <p style="color:var(--text-muted);font-size:0.82rem;">Contact your administrator to enable or disable MFA for your account.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SECTION: profile ══ -->
+      <section data-section="profile" style="display:none;">
+        <!-- View card -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">&#128100; Profile</span></div>
+          <div class="card-body">
+            <div class="security-grid">
+              <div class="security-item">
+                <span class="security-item-icon">&#128100;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Full Name</div>
+                  <div class="security-item-value" id="profileName">—</div>
+                </div>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128140;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Email Address</div>
+                  <div class="security-item-value font-mono" id="profileEmail">—</div>
+                </div>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128274;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">Role</div>
+                  <div class="security-item-value" id="profileRole">—</div>
+                </div>
+              </div>
+              <div class="security-item">
+                <span class="security-item-icon">&#128241;</span>
+                <div class="security-item-info">
+                  <div class="security-item-label">MFA Status</div>
+                  <div class="security-item-value" id="profileMfa">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit name card -->
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header"><span class="card-title">&#9998; Edit Name</span></div>
+          <div class="card-body">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <input type="text" id="editNameInput" placeholder="Enter your name"
+                style="flex:1;min-width:200px;padding:10px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:0.95rem;" />
+              <button class="btn btn-primary" id="saveNameBtn" style="padding:10px 20px;">Save Name</button>
+            </div>
+            <div id="profileMsg" style="display:none;margin-top:10px;font-size:0.88rem;font-weight:500;"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══ SECTION: sessions ══ -->
+      <section data-section="sessions" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">&#128279; Active Sessions</span>
+            <button class="btn btn-danger" style="padding:6px 12px;font-size:0.82rem;" id="revokeAllBtn">Revoke All Others</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Session ID</th><th>Device</th><th>IP Address</th><th>Started</th><th>Action</th></tr>
+                </thead>
+                <tbody id="sessionsBody">
+                  <tr><td colspan="5" class="text-muted text-center" style="padding:24px;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SECTION: admin ══ -->
+      <section data-section="admin" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">&#9881; User Management</span>
+            <button class="btn btn-ghost" style="padding:6px 12px;font-size:0.82rem;" onclick="dashboard.loadAdminUsers()">Refresh</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th><th>Email</th><th>Role</th><th>Last IP</th><th>Last Login</th>
+                    <th>Device</th><th>Device Trust</th><th>MFA</th><th>Status</th><th>Sessions</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminUsersBody">
+                  <tr><td colspan="11" class="text-muted text-center" style="padding:24px;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-body -->
+  </main>
+</div>
+
+<script src="../js/device-fingerprint.js"></script>
+<script src="../js/api.js?v=2"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/dashboard.js"></script>
+
+</body>
+</html>

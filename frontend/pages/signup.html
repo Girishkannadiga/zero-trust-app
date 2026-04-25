@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up — Zero Trust Secure Cloud Access</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+  <style>
+    .password-strength { margin-top: 6px; }
+    .strength-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .strength-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s, background 0.3s;
+      width: 0%;
+    }
+    .strength-text { font-size: 0.75rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <div class="login-brand">
+      <div class="brand-icon">&#128274;</div>
+      <div class="brand-text">
+        <h1>Zero Trust</h1>
+        <p>Secure Cloud Access System</p>
+      </div>
+    </div>
+
+    <h2 class="login-title">Create Account</h2>
+    <p class="login-subtitle">Fill in the details below to register your secure account.</p>
+
+    <div id="signupAlert" class="alert mt-1"></div>
+
+    <form class="login-form" id="signupForm" novalidate>
+
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <div class="input-wrapper">
+          <input type="text" id="fullName" placeholder="John Doe" maxlength="100" required />
+          <span class="input-icon">&#128100;</span>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <input type="email" id="email" placeholder="you@company.com" autocomplete="email" required />
+          <span class="input-icon">&#9993;</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="Min. 8 characters"
+                 autocomplete="new-password" required />
+          <span class="input-icon" id="togglePassword" title="Show/hide password">&#128065;</span>
+        </div>
+        <div class="password-strength">
+          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          <span class="strength-text" id="strengthText"></span>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="confirmPassword" placeholder="Repeat your password"
+                 autocomplete="new-password" required />
+          <span class="input-icon">&#128274;</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full" id="signupBtn">
+        Create Account
+      </button>
+
+    </form>
+
+    <p style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-top:20px;">
+      Already have an account?
+      <a href="login.html" style="color:var(--accent);font-weight:600;">Sign In</a>
+    </p>
+
+    <div class="trust-indicators">
+      <div class="trust-item"><span>&#128274;</span><span>All data is encrypted in transit</span></div>
+      <div class="trust-item"><span>&#128241;</span><span>MFA can be enabled after signup</span></div>
+      <div class="trust-item"><span>&#128250;</span><span>Device &amp; IP tracking active from day one</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/signup.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Denied — Zero Trust Secure Cloud Access</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+  <style>
+    .error-code {
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--color-danger), #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .reason-box {
+      background: rgba(248,81,73,0.1);
+      border: 1px solid rgba(248,81,73,0.3);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      margin: 16px 0 24px;
+    }
+
+    .reason-box strong { color: var(--color-danger); }
+
+    .action-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card" style="text-align:center;">
+
+    <div class="error-icon">&#128683;</div>
+    <div class="error-code">403</div>
+    <h2 class="login-title">Access Denied</h2>
+    <p class="login-subtitle">You do not have permission to access this resource.</p>
+
+    <div class="reason-box">
+      <strong>Zero Trust Policy:</strong> Access was blocked because your session, device, or IP address
+      does not meet the required security level for this resource.
+    </div>
+
+    <div class="action-group">
+      <a href="login.html" class="btn btn-primary btn-full">&#128274; Return to Login</a>
+      <a href="dashboard.html" class="btn btn-ghost btn-full">&#127968; Go to Dashboard</a>
+    </div>
+
+    <div class="trust-indicators" style="text-align:left;">
+      <div class="trust-item">
+        <span>&#9432;</span>
+        <span>This incident has been logged and reported.</span>
+      </div>
+      <div class="trust-item">
+        <span>&#128222;</span>
+        <span>Contact your administrator if this was unexpected.</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

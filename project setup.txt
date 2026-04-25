@@ -1,0 +1,44 @@
+D:\Finalproject\start-backend.bat --- to start in cmd
+
+taskkill //F //PID 29172 2>&1 || echo "Process may already be gone" --- to kill task already started
+
+----
+After any backend code change, rebuild with:
+
+Stop-Process -Name java -Force
+Then run start-backend.bat — Maven rebuild command is the same one we've been using
+
+---
+Option B: Update directly in MySQL (no rebuild needed)
+-- Get bcrypt hash of your new password first (use any bcrypt tool online)
+UPDATE users SET email='newemail@company.com', password='$2a$10$...' WHERE email='admin@zerotrust.com';
+
+
+Demo: 0 → HIGH Risk step by step
+Step 1 — Disable MFA for admin → +30 points
+Dashboard → User Management (left sidebar)
+Find admin@zerotrust.com → click Disable MFA
+Go back to Overview → score jumps +30
+Step 2 — Revoke device trust → +25 points
+Dashboard → Devices (left sidebar)
+Click Revoke on your current device
+Go back to Overview → score jumps +25
+Now at 55 = MEDIUM (yellow)
+
+Step 3 — Trigger failed login attempts → +15 points
+Open a new Incognito window
+Go to login.html
+Enter admin@zerotrust.com with a wrong password — do this 3 times
+Go back to Dashboard Overview → score jumps +15
+Now at 70 = HIGH (red) ✓
+
+Optional: Open multiple sessions → +10 more
+Open 2 more Incognito windows, log in as admin in each
+That's 3+ active sessions → +10
+Score = 80 = HIGH
+
+To restore back to SAFE (for demo contrast)
+Enable MFA → -30
+Trust the device → -25
+Revoke extra sessions → -10
+Score drops back to 0 = LOW (green)

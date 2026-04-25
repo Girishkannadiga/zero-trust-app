@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Notes — Zero Trust</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/notes.css" />
+</head>
+<body>
+
+<div class="notes-layout">
+
+  <!-- ── Top bar ─────────────────────────────────────────── -->
+  <header class="notes-topbar">
+    <div class="notes-brand">
+      <span class="notes-brand-icon">&#128274;</span>
+      <div>
+        <div>Zero Trust <span style="color:var(--accent);">Secure Notes</span></div>
+        <div style="font-size:0.7rem;font-weight:400;color:var(--text-muted);">End-to-end encrypted · Private to you</div>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="topbar-clock" id="liveClock">--:--:--</div>
+      <div class="user-chip">
+        <div class="user-chip-avatar" id="userAvatar">?</div>
+        <span id="userName">Loading…</span>
+      </div>
+      <button class="btn btn-danger" id="logoutBtn" style="padding:6px 14px;font-size:0.82rem;">&#128274; Logout</button>
+    </div>
+  </header>
+
+  <!-- ── Security banner ────────────────────────────────── -->
+  <div id="securityBanner" class="security-banner secure" style="display:none;"></div>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <main class="notes-main">
+
+    <div class="notes-header">
+      <div>
+        <div class="notes-title">&#128196; My Confidential Notes</div>
+        <div class="notes-count" id="notesCount">Loading…</div>
+      </div>
+      <button class="btn btn-primary" id="addNoteBtn" style="gap:6px;">
+        &#43; Add Note
+      </button>
+    </div>
+
+    <div class="notes-grid" id="notesGrid">
+      <div class="notes-empty">
+        <div class="notes-empty-icon">&#128196;</div>
+        <div class="notes-empty-text">Loading notes…</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── Add / Edit Modal ─────────────────────────────────── -->
+<div class="modal-overlay" id="noteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">New Note</span>
+      <button class="modal-close" id="modalClose">&#10005;</button>
+    </div>
+
+    <div id="modalAlert" class="alert" style="margin-bottom:0;"></div>
+
+    <div class="form-group" style="margin:0;">
+      <label for="noteTitle">Title</label>
+      <input type="text" id="noteTitle" placeholder="Note title…" maxlength="200" />
+    </div>
+
+    <div class="form-group" style="margin:0;">
+      <label for="noteContent">Content</label>
+      <textarea id="noteContent" placeholder="Write your confidential note here…" maxlength="10000"></textarea>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalSave">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/device-fingerprint.js"></script>
+<script src="../js/api.js?v=2"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/notes.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+to view note 
+SELECT n.id, u.name, u.email, n.title, n.content, n.created_at, n.updated_at
+FROM notes n
+JOIN users u ON n.user_id = u.id
+ORDER BY n.updated_at DESC;

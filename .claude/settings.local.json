@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "PowerShell(netstat -an)",
+      "PowerShell(Invoke-RestMethod -Uri \"http://[::1]:8081/actuator/health\" -Method Get 2>&1)",
+      "PowerShell(curl.exe -s -X POST \"http://localhost:8081/api/auth/login\" -H \"Content-Type: application/json\" -d $body)",
+      "PowerShell($body = '{\"email\":\"admin@zerotrust.com\",\"password\":\"Admin123!\",\"deviceFingerprint\":\"test\",\"deviceLabel\":\"TestPC\",\"deviceOs\":\"Windows\",\"deviceBrowser\":\"Chrome\"}')",
+      "PowerShell(Get-Content \"d:\\\\Finalproject\\\\backend\\\\app.log\" -Tail 50 | Where-Object { $_ -match \"Unhandled|NullPointer|Error|Cannot|Failed\" } | Select-Object -Last 20)",
+      "Bash(mvn clean *)"
+    ]
+  }
+}

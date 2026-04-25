@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Zero Trust Secure Cloud Access</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <!-- Brand -->
+    <div class="login-brand">
+      <div class="brand-icon">&#128274;</div>
+      <div class="brand-text">
+        <h1>Zero Trust</h1>
+        <p>Secure Cloud Access System</p>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h2 class="login-title">Sign In</h2>
+    <p class="login-subtitle">Verify your identity to access the secure environment.</p>
+
+    <!-- Alert -->
+    <div id="loginAlert" class="alert alert-error mt-1"></div>
+
+    <!-- Form -->
+    <form class="login-form" id="loginForm" novalidate>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@company.com"
+            autocomplete="email"
+            required
+          />
+          <span class="input-icon">&#9993;</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+          <span class="input-icon" id="togglePassword" title="Show/hide password">&#128065;</span>
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox-label">
+          <input type="checkbox" id="rememberDevice" />
+          Trust this device
+        </label>
+        <a href="#" class="text-muted" style="font-size:0.85rem;">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+        Sign In
+      </button>
+
+    </form>
+
+    <p style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-top:16px;">
+      Don't have an account?
+      <a href="signup.html" style="color:var(--accent);font-weight:600;">Sign Up</a>
+    </p>
+
+    <!-- Trust indicators -->
+    <div class="trust-indicators">
+      <div class="trust-item">
+        <span>&#128274;</span>
+        <span>All sessions are encrypted with TLS 1.3</span>
+      </div>
+      <div class="trust-item">
+        <span>&#128241;</span>
+        <span>MFA required on every login</span>
+      </div>
+      <div class="trust-item">
+        <span>&#128250;</span>
+        <span>Device and IP tracking is active</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/device-fingerprint.js"></script>
+<script src="../js/api.js?v=2"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

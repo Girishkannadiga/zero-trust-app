@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MFA Verification — Zero Trust Secure Cloud Access</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+  <style>
+    .otp-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 8px 0;
+    }
+
+    .otp-input {
+      width: 52px !important;
+      height: 58px;
+      text-align: center;
+      font-size: 1.4rem !important;
+      font-weight: 700;
+      padding: 0 !important;
+      border-radius: var(--radius) !important;
+      letter-spacing: 0;
+    }
+
+    .otp-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(47,129,247,0.25);
+    }
+
+    .resend-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+
+    #resendBtn {
+      background: none;
+      border: none;
+      color: var(--color-primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+    }
+    #resendBtn:disabled { color: var(--color-text-muted); text-decoration: none; cursor: not-allowed; }
+
+    .method-tabs {
+      display: flex;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .method-tab {
+      flex: 1;
+      padding: 9px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      background: var(--color-surface-alt);
+      color: var(--color-text-muted);
+      border: none;
+      transition: background var(--transition), color var(--transition);
+    }
+    .method-tab.active {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .step { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
+    .step-dot {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .step-dot.done { background: var(--color-success); color: #fff; }
+    .step-dot.active { background: var(--color-primary); color: #fff; }
+    .step-dot.pending { background: var(--color-surface-alt); color: var(--color-text-muted); border: 1px solid var(--color-border); }
+    .step-line { flex: 1; height: 1px; background: var(--color-border); }
+  </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <!-- Brand -->
+    <div class="login-brand">
+      <div class="brand-icon">&#128272;</div>
+      <div class="brand-text">
+        <h1>Zero Trust</h1>
+        <p>Multi-Factor Authentication</p>
+      </div>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step">
+        <div class="step-dot done">&#10003;</div>
+        <span class="text-muted">Login</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-dot active">2</div>
+        <span>Verify</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-dot pending">3</div>
+        <span class="text-muted">Access</span>
+      </div>
+    </div>
+
+    <!-- Method tabs -->
+    <div class="method-tabs">
+      <button class="method-tab active" data-method="email" id="tabEmail">&#9993; Email OTP</button>
+      <button class="method-tab" data-method="totp" id="tabTotp">&#128241; Authenticator</button>
+    </div>
+
+    <h2 class="login-title">Enter Verification Code</h2>
+    <p class="login-subtitle" id="mfaSubtitle">
+      A 6-digit code has been sent to your registered email address.
+    </p>
+
+    <!-- Alert -->
+    <div id="mfaAlert" class="alert alert-error mt-1"></div>
+
+    <form id="mfaForm" class="login-form" novalidate>
+
+      <div class="form-group">
+        <label>Verification Code</label>
+        <div class="otp-group">
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp0" />
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp1" />
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp2" />
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp3" />
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp4" />
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp5" />
+        </div>
+      </div>
+
+      <div class="resend-row">
+        <span id="timerText">Resend code in <strong id="countdown">60</strong>s</span>
+        <button type="button" id="resendBtn" disabled>Resend</button>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full" id="verifyBtn">
+        Verify &amp; Continue
+      </button>
+
+      <a href="login.html" class="btn btn-ghost btn-full">&#8592; Back to Login</a>
+
+    </form>
+
+    <!-- Trust indicators -->
+    <div class="trust-indicators">
+      <div class="trust-item">
+        <span>&#8987;</span>
+        <span>OTP expires in 10 minutes</span>
+      </div>
+      <div class="trust-item">
+        <span>&#128272;</span>
+        <span>Max 5 attempts before lockout</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/device-fingerprint.js"></script>
+<script src="../js/api.js?v=2"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/mfa.js"></script>
+
+</body>
+</html>

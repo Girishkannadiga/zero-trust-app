@@ -1,0 +1,39 @@
+1. Account Lockout after Failed Attempts
+After 5 wrong passwords → account auto-locks
+Admin can unlock from User Management
+Already has the backend logic — just needs UI to show "Account Locked" on login page
+2. Session Timeout Warning
+Show a countdown popup "Your session expires in 5 minutes"
+Auto logout when JWT expires
+Currently expiry is stored but never warned
+3. Real IP Geolocation
+Show city/country next to IP address in login logs
+Free API: ip-api.com — call it when logging IP
+Makes IP tracking much more visual and meaningful
+4. Login Notification Email
+When someone logs in to your account, send an email alert
+"New login detected from IP x.x.x.x at 10:30 AM"
+Very real-world feature banks use
+Medium Impact
+5. Password Change
+User can change their own password from profile
+Validates old password before allowing change
+6. Suspicious Login Alert
+If login comes from a new IP never seen before → flag it
+Show warning banner on dashboard "First time login from this IP"
+7. Activity Log for Admin
+Full audit trail: who did what and when
+"User X changed password", "Admin enabled MFA for User Y"
+8. Export Reports
+Admin can download login logs as CSV
+Good for compliance/audit demonstration
+Easy Wins (quick to build)
+9. Dashboard Charts
+Bar chart of login attempts per day
+Pie chart of trusted vs untrusted devices
+Makes the dashboard visually impressive
+10. User Profile Edit
+Let users update their name
+Currently profile is read-only
+11. "Remember Me" on Login
+Already has the checkbox — but trust this device logic could be stronger
